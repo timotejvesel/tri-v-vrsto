@@ -1,2 +1,4 @@
-# tri-v-vrsto
-Uvod v programiranje, projekt
+# Tri v vrsto
+
+## Projektna naloga za Uvod v programiranje.
+

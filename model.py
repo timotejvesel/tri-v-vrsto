@@ -1,79 +1,78 @@
+import random
 
-tablica = ["", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+PRAZNO = " "
+IGRALEC_CLOVEK = "X"
+IGRALEC_RACUNALNIK = "O"
 
-def izpisi_tablico():
-	print(tablica[1] + " | " + tablica[2] +  " | "  + tablica[3])
-	print("----------")
-	print(tablica[4] + " | " + tablica[5] +  " | "  + tablica[6])
-	print("----------")
-	print(tablica[7] + " | " + tablica[8] +  " | "  + tablica[9])
+class Igra:
+	def __init__(self):
+		self.tablica = [
+							 PRAZNO, PRAZNO, PRAZNO, 
+							 PRAZNO, PRAZNO, PRAZNO,
+							 PRAZNO, PRAZNO, PRAZNO
+						]
 
-def vnesi(igralec):
-	polje = int(input("Izberi prazno polje za " + igralec + ": "))
-	# preveri, če je izbrano polje prazno
-	if tablica[polje] == str(polje):
-		tablica[polje] = igralec
-	else:
-		print("To polje je že zasedeno! Izberi drugo polje.")
-		izpisi_tablico()
-		vnesi(igralec)
-	izpisi_tablico()
-	print()
+	def clovek(self, polje):
+		if self.tablica[polje] == PRAZNO:
+			self.tablica[polje] = IGRALEC_CLOVEK
+		else:
+			return False
 
+	def racunalnik(self, polje=random.randint(0, 8)):
+		if self.tablica[polje] == PRAZNO:
+			self.tablica[polje] = IGRALEC_RACUNALNIK
+		else:
+			return False
 
-def zmagovalne_kombinacije(igralec):
-	# preveri vrstice
-	if tablica[1] == tablica[2] == tablica[3] == igralec or \
-		tablica[4] == tablica[5] == tablica[6] == igralec or \
-		tablica[7] == tablica[8] == tablica[9] == igralec:
-			return True
+	def __repr__(self):
+		return 'Igra({})'.format(self.tablica)
 
-	# preveri stolpce
-	if tablica[1] == tablica[4] == tablica[7] == igralec or \
-		tablica[2] == tablica[5] == tablica[8] == igralec or \
-		tablica[3] == tablica[6] == tablica[9] == igralec:
-			return True
+	def __str__(self):
+		return(self.tablica[0] + " | " + self.tablica[1] +  " | "  + self.tablica[2] + "\n" +\
+			"----------" + "\n" +\
+			self.tablica[3] + " | " + self.tablica[4] +  " | "  + self.tablica[5] + "\n" +\
+			"----------" +"\n" +\
+			self.tablica[6] + " | " + self.tablica[7] +  " | "  + self.tablica[8] + "\n")
 
-	# preveri diagonale
-	if tablica[1] == tablica[5] == tablica[9] == igralec or \
-		tablica[3] == tablica[5] == tablica[7] == igralec:
-			return True
+	def zmagovalne_kombinacije_clovek(self):
+		# Preveri vrstice
+		if self.tablica[0] == self.tablica[1] == self.tablica[2] == IGRALEC_CLOVEK or \
+			self.tablica[3] == self.tablica[4] == self.tablica[5] == IGRALEC_CLOVEK or \
+			self.tablica[6] == self.tablica[7] == self.tablica[8] == IGRALEC_CLOVEK:
+				return True
 
-def polna_tablica():
-	prazna_mesta = 0
-	for i in range(1, 10):
-		if tablica[i] == str(i):
-			prazna_mesta += 1
-	return prazna_mesta
-			
+		# Preveri vrstice
+		if self.tablica[0] == self.tablica[3] == self.tablica[6] == IGRALEC_CLOVEK or \
+			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_CLOVEK or \
+			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_CLOVEK:
+				return True
+	
+		# Preveri diagonale
+		if self.tablica[0] == self.tablica[4] == self.tablica[8] == IGRALEC_CLOVEK or \
+			self.tablica[2] == self.tablica[4] == self.tablica[6] == IGRALEC_CLOVEK:
+				return True
 
+	def zmagovalne_kombinacije_racunalnik(self):
+		# Preveri vrstice
+		if self.tablica[0] == self.tablica[1] == self.tablica[2] == IGRALEC_RACUNALNIK or \
+			self.tablica[3] == self.tablica[4] == self.tablica[5] == IGRALEC_RACUNALNIK or \
+			self.tablica[6] == self.tablica[7] == self.tablica[8] == IGRALEC_RACUNALNIK:
+				return True
 
+		# Preveri vrstice
+		if self.tablica[0] == self.tablica[3] == self.tablica[6] == IGRALEC_RACUNALNIK or \
+			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_RACUNALNIK or \
+			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_RACUNALNIK:
+				return True
+	
+		# Preveri diagonale
+		if self.tablica[0] == self.tablica[4] == self.tablica[8] == IGRALEC_RACUNALNIK or \
+			self.tablica[2] == self.tablica[4] == self.tablica[6] == IGRALEC_RACUNALNIK:
+				return True
 
-izpisi_tablico()
-while True:
-
-	vnesi("X")
-	if zmagovalne_kombinacije("X"):
-		izpisi_tablico()
-		print("Igralec X je zmagovalec!")
-		break
-
-	if polna_tablica() == 0:
-		print('Neodločeno!')
-		break
-
-	vnesi("O")
-	if zmagovalne_kombinacije("O"):
-		izpisi_tablico
-		print("Igralec O je zmagovalec!")
-		break
-			
-	if polna_tablica() == 0:
-		print('Neodločeno!')
-		break
-
-
-# V datoteko zapisi trenutno stanje
-# Graficni vmesnik
-
-
+	def polna_tablica(self):
+		prazna_mesta = 0
+		for i in range(9):
+			if self.tablica[i] == PRAZNO
+				prazna_mesta += 1
+		return prazna mesta

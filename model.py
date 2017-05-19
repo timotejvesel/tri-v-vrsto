@@ -73,6 +73,7 @@ class Igra:
 	def polna_tablica(self):
 		prazna_mesta = 0
 		for i in range(9):
-			if self.tablica[i] == PRAZNO
+			if self.tablica[i] == PRAZNO:
 				prazna_mesta += 1
-		return prazna mesta
+		if prazna_mesta == 0:
+			return True

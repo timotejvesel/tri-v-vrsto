@@ -209,7 +209,8 @@ class Gui:
 
 		
 		
-	
+
 okno = tk.Tk()
+okno.resizable(0,0)
 moj_program = Gui(okno)
 okno.mainloop()

@@ -17,6 +17,7 @@ class Gui:
 			width=3 * VELIKOST_TABLICE + ODMIK,
 			height=3 * VELIKOST_TABLICE + ODMIK
 		)
+
 		self.igralna_plosca.pack()
 		self.osvezi_prikaz()
 		self.klik()
@@ -34,7 +35,46 @@ class Gui:
 		else:
 			self.igra.clovek(n)
 
-		self.igralna_plosca.create_line(
+			self.igralna_plosca.create_line(
+				2 * ODMIK + x * VELIKOST_TABLICE,
+				2 * ODMIK + y * VELIKOST_TABLICE,
+				(x + 1) * VELIKOST_TABLICE - ODMIK, 
+				(y + 1) * VELIKOST_TABLICE - ODMIK,
+				width=3
+			)
+
+			self.igralna_plosca.create_line(
+				2* ODMIK + x * VELIKOST_TABLICE,
+				(y + 1) * VELIKOST_TABLICE - ODMIK,
+				(x + 1) * VELIKOST_TABLICE - ODMIK,
+				2 * ODMIK + y * VELIKOST_TABLICE,
+				width=3
+			)
+		
+
+			if self.igra.zmagovalne_kombinacije_clovek() == True:
+				tk.messagebox.showinfo(" ", "Zmagal si!")
+				self.odstrani_klik()
+
+			elif self.igra.polna_tablica() == True:
+				tk.messagebox.showinfo(" ", "Neodločeno!")
+				self.odstrani_klik()
+			else:
+				self.krog()
+				if self.igra.zmagovalne_kombinacije_racunalnik() == True:
+					tk.messagebox.showinfo(" ", "Izgubil si!")
+					self.odstrani_klik()
+				
+		print(self.igra)
+
+	def krog(self):
+		m = self.igra.racunalnik()
+
+		# Matrične koordinate
+		x = m % 3
+		y = m // 3
+
+		self.igralna_plosca.create_oval(
 			2 * ODMIK + x * VELIKOST_TABLICE,
 			2 * ODMIK + y * VELIKOST_TABLICE,
 			VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE, 
@@ -42,26 +82,7 @@ class Gui:
 			width=3
 		)
 
-		self.igralna_plosca.create_line(
-			2* ODMIK + x * VELIKOST_TABLICE,
-			VELIKOST_TABLICE - ODMIK + y * VELIKOST_TABLICE,
-			VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE,
-			2 * ODMIK + y * VELIKOST_TABLICE,
-			width=3
-		)
-
-		self.igra.racunalnik()
 		
-		print(self.igra)
-
-		if self.igra.zmagovalne_kombinacije_clovek() == True:
-			tk.messagebox.showinfo(" ", "Zmagal si!")
-			self.odstrani_klik()
-
-
-
-			
-
 	def osvezi_prikaz(self):
 		self.igralna_plosca.delete('all')
 
@@ -136,15 +157,42 @@ class Gui:
 		)
 
 	def klik(self):
-		self.igralna_plosca.tag_bind("kvadrat0_tag","<Button-1>", lambda event: self.kvadrat(event, 0))
-		self.igralna_plosca.tag_bind("kvadrat1_tag","<Button-1>", lambda event: self.kvadrat(event, 1))
-		self.igralna_plosca.tag_bind("kvadrat2_tag","<Button-1>", lambda event: self.kvadrat(event, 2))
-		self.igralna_plosca.tag_bind("kvadrat3_tag","<Button-1>", lambda event: self.kvadrat(event, 3))
-		self.igralna_plosca.tag_bind("kvadrat4_tag","<Button-1>", lambda event: self.kvadrat(event, 4))
-		self.igralna_plosca.tag_bind("kvadrat5_tag","<Button-1>", lambda event: self.kvadrat(event, 5))
-		self.igralna_plosca.tag_bind("kvadrat6_tag","<Button-1>", lambda event: self.kvadrat(event, 6))
-		self.igralna_plosca.tag_bind("kvadrat7_tag","<Button-1>", lambda event: self.kvadrat(event, 7))
-		self.igralna_plosca.tag_bind("kvadrat8_tag","<Button-1>", lambda event: self.kvadrat(event, 8))
+		self.igralna_plosca.tag_bind(
+			"kvadrat0_tag","<Button-1>",
+			 lambda event: self.kvadrat(event, 0)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat1_tag","<Button-1>", 
+			lambda event: self.kvadrat(event, 1)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat2_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 2)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat3_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 3)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat4_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 4)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat5_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 5)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat6_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 6)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat7_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 7)
+		)
+		self.igralna_plosca.tag_bind(
+			"kvadrat8_tag","<Button-1>",
+			lambda event: self.kvadrat(event, 8)
+		)
 
 
 	def odstrani_klik(self):
@@ -157,8 +205,6 @@ class Gui:
 		self.igralna_plosca.tag_unbind("kvadrat6_tag",'<Button-1>')
 		self.igralna_plosca.tag_unbind("kvadrat7_tag",'<Button-1>')
 		self.igralna_plosca.tag_unbind("kvadrat8_tag",'<Button-1>')
-		
-		
 		
 
 		

@@ -18,11 +18,13 @@ class Igra:
 		else:
 			return False
 
-	def racunalnik(self, polje=random.randint(0, 8)):
-		if self.tablica[polje] == PRAZNO:
-			self.tablica[polje] = IGRALEC_RACUNALNIK
-		else:
-			return False
+	def racunalnik(self):
+		while True:
+			polje = random.randint(0, 8)
+			if self.tablica[polje] == PRAZNO:
+				self.tablica[polje] = IGRALEC_RACUNALNIK
+				return polje
+				break
 
 	def __repr__(self):
 		return 'Igra({})'.format(self.tablica)
@@ -41,10 +43,10 @@ class Igra:
 			self.tablica[6] == self.tablica[7] == self.tablica[8] == IGRALEC_CLOVEK:
 				return True
 
-		# Preveri vrstice
+		# Preveri stolpce 
 		if self.tablica[0] == self.tablica[3] == self.tablica[6] == IGRALEC_CLOVEK or \
 			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_CLOVEK or \
-			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_CLOVEK:
+			self.tablica[2] == self.tablica[5] == self.tablica[8] == IGRALEC_CLOVEK:
 				return True
 	
 		# Preveri diagonale
@@ -62,7 +64,7 @@ class Igra:
 		# Preveri vrstice
 		if self.tablica[0] == self.tablica[3] == self.tablica[6] == IGRALEC_RACUNALNIK or \
 			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_RACUNALNIK or \
-			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_RACUNALNIK:
+			self.tablica[2] == self.tablica[5] == self.tablica[8] == IGRALEC_RACUNALNIK:
 				return True
 	
 		# Preveri diagonale

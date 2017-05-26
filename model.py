@@ -19,12 +19,137 @@ class Igra:
 			return False
 
 	def racunalnik(self):
-		while True:
-			polje = random.randint(0, 8)
-			if self.tablica[polje] == PRAZNO:
-				self.tablica[polje] = IGRALEC_RACUNALNIK
-				return polje
-				break
+		if self.tablica[0] == PRAZNO:
+			self.tablica[0] = IGRALEC_RACUNALNIK
+			polje = 0
+			return polje
+		elif self.tablica[0] == self.tablica[1] != PRAZNO and \
+		   self.tablica[2] == PRAZNO:
+			self.tablica[2] = IGRALEC_RACUNALNIK
+			polje = 2
+			return polje
+		elif self.tablica[0] == self.tablica[2] != PRAZNO and \
+		   self.tablica[1] == PRAZNO:
+			self.tablica[1] = IGRALEC_RACUNALNIK
+			polje = 1
+			return polje
+		elif self.tablica[1] == self.tablica[2] != PRAZNO and \
+		   self.tablica[0] == PRAZNO:
+			self.tablica[0] = IGRALEC_RACUNALNIK
+			polje = 0
+			return polje
+		elif self.tablica[3] == self.tablica[4] != PRAZNO and \
+		   self.tablica[5] == PRAZNO:
+			self.tablica[5] = IGRALEC_RACUNALNIK
+			polje = 5
+			return polje
+		elif self.tablica[4] == self.tablica[5] != PRAZNO and \
+		   self.tablica[6] == PRAZNO:
+			self.tablica[6] = IGRALEC_RACUNALNIK
+			polje = 6
+			return polje
+		elif self.tablica[3] == self.tablica[5] != PRAZNO and \
+		   self.tablica[4] == PRAZNO:
+			self.tablica[4] = IGRALEC_RACUNALNIK
+			polje = 4
+			return polje
+		elif self.tablica[6] == self.tablica[7] != PRAZNO and \
+		   self.tablica[8] == PRAZNO:
+			self.tablica[8] = IGRALEC_RACUNALNIK
+			polje = 8
+			return polje
+		elif self.tablica[7] == self.tablica[8] != PRAZNO and \
+		   self.tablica[6] == PRAZNO:
+			self.tablica[6] = IGRALEC_RACUNALNIK
+			polje = 6
+			return polje
+		elif self.tablica[6] == self.tablica[8] != PRAZNO and \
+		   self.tablica[7] == PRAZNO:
+			self.tablica[7] = IGRALEC_RACUNALNIK
+			polje = 7
+			return polje
+		elif self.tablica[0] == self.tablica[3] != PRAZNO and \
+		   self.tablica[6] == PRAZNO:
+			self.tablica[6] = IGRALEC_RACUNALNIK
+			polje = 6
+			return polje
+		elif self.tablica[3] == self.tablica[6] != PRAZNO and \
+		   self.tablica[0] == PRAZNO:
+			self.tablica[0] = IGRALEC_RACUNALNIK
+			polje = 0
+			return polje
+		elif self.tablica[0] == self.tablica[6] != PRAZNO and \
+		   self.tablica[3] == PRAZNO:
+			self.tablica[3] = IGRALEC_RACUNALNIK
+			polje = 3
+			return polje
+		elif self.tablica[1] == self.tablica[4] != PRAZNO and \
+		   self.tablica[7] == PRAZNO:
+			self.tablica[7] = IGRALEC_RACUNALNIK
+			polje = 7
+			return polje
+		elif self.tablica[4] == self.tablica[7] != PRAZNO and \
+		   self.tablica[1] == PRAZNO:
+			self.tablica[1] == IGRALEC_RACUNALNIK
+			polje = 1
+			return polje
+		elif self.tablica[1] == self.tablica[7] != PRAZNO and \
+		   self.tablica[4] == PRAZNO:
+			self.tablica[4] = IGRALEC_RACUNALNIK
+			polje = 4
+			return polje
+		elif self.tablica[2] == self.tablica[5] != PRAZNO and \
+		   self.tablica[8] == PRAZNO:
+			self.tablica[8] = IGRALEC_RACUNALNIK
+			polje = 8
+			return polje
+		elif self.tablica[5] == self.tablica[8] != PRAZNO and \
+		   self.tablica[2] == PRAZNO:
+			self.tablica[2] = IGRALEC_RACUNALNIK
+			polje = 2
+			return polje
+		elif self.tablica[2] == self.tablica[8] != PRAZNO and \
+		   self.tablica[5] == PRAZNO:
+			self.tablica[5] = IGRALEC_RACUNALNIK
+			polje = 5
+			return polje
+		elif self.tablica[0] == self.tablica[4] != PRAZNO and \
+		   self.tablica[8] == PRAZNO:
+			self.tablica[8] = IGRALEC_RACUNALNIK
+			polje = 8
+			return polje
+		elif self.tablica[4] == self.tablica[8] != PRAZNO and \
+		   self.tablica[0] == PRAZNO:
+			self.tablica[0] = IGRALEC_RACUNALNIK
+			polje = 0
+			return polje
+		elif self.tablica[0] == self.tablica[8] != PRAZNO and \
+		   self.tablica[4] == PRAZNO:
+			self.tablica[4] = IGRALEC_RACUNALNIK
+			polje = 4
+			return polje
+		elif self.tablica[2] == self.tablica[4] != PRAZNO and \
+		   self.tablica[6] == PRAZNO:
+			self.tablica[6] = IGRALEC_RACUNALNIK
+			polje = 6
+			return polje
+		elif self.tablica[4] == self.tablica[6] != PRAZNO and \
+		   self.tablica[2] == PRAZNO:
+			 self.tablica[2] = IGRALEC_RACUNALNIK
+			 polje = 2
+			 return polje
+		elif self.tablica[2] == self.tablica[6] != PRAZNO and \
+		   self.tablica[4] == PRAZNO:
+			self.tablica[4] = IGRALEC_RACUNALNIK
+			polje = 4
+			return polje
+		else:
+			while True:
+				polje = random.randint(0, 8)
+				if self.tablica[polje] == PRAZNO:
+					self.tablica[polje] = IGRALEC_RACUNALNIK
+					return polje
+					break
 
 	def __repr__(self):
 		return 'Igra({})'.format(self.tablica)

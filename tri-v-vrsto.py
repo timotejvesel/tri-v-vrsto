@@ -22,8 +22,12 @@ class Gui:
 		self.osvezi_prikaz()
 		self.klik()
 		
-		
 
+		gumb = tk.Button(okno, text="Nova igra", command=lambda: [f() for f in [self.igra.nova_igra, self.osvezi_prikaz]])
+		gumb.place(x=340, y=20)
+		gumb.pack()
+
+	
 
 	def kvadrat(self, event, n):
 		# Matrične koordinate
@@ -206,9 +210,9 @@ class Gui:
 		self.igralna_plosca.tag_unbind("kvadrat7_tag",'<Button-1>')
 		self.igralna_plosca.tag_unbind("kvadrat8_tag",'<Button-1>')
 		
+		
+		
 
-		
-		
 
 okno = tk.Tk()
 okno.resizable(0,0)

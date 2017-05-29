@@ -204,3 +204,10 @@ class Igra:
 				prazna_mesta += 1
 		if prazna_mesta == 0:
 			return True
+
+	def nova_igra(self):
+		for i in range(9):
+			self.tablica[i] = PRAZNO
+
+
+

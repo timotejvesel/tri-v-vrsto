@@ -23,11 +23,18 @@ class Gui:
 		self.klik()
 		
 
-		gumb = tk.Button(okno, text="Nova igra", command=lambda: [f() for f in [self.igra.nova_igra, self.osvezi_prikaz]])
+		gumb = tk.Button(okno, text="Nova igra", command=self.konec)
 		gumb.place(x=340, y=20)
 		gumb.pack()
 
 	
+	def konec(self):
+		izbira = tk.messagebox.askokcancel("Potrdi", "Konec igre?")
+		if izbira == True:
+			self.igra.nova_igra()
+			self.osvezi_prikaz()
+		else:
+			pass
 
 	def kvadrat(self, event, n):
 		# Matrične koordinate

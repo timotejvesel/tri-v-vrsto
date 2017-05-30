@@ -90,7 +90,7 @@ class Igra:
 			return polje
 		elif self.tablica[4] == self.tablica[7] != PRAZNO and \
 		   self.tablica[1] == PRAZNO:
-			self.tablica[1] == IGRALEC_RACUNALNIK
+			self.tablica[1] = IGRALEC_RACUNALNIK
 			polje = 1
 			return polje
 		elif self.tablica[1] == self.tablica[7] != PRAZNO and \

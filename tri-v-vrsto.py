@@ -6,8 +6,6 @@ import pickle
 VELIKOST_TABLICE = 100
 ODMIK = 10
 
-#TODO: števec zmag??? 
-
 class Gui:
 	def __init__(self, okno):
 		# Nastavimo model
@@ -23,22 +21,7 @@ class Gui:
 		self.igralna_plosca.pack()
 		self.osvezi_prikaz()
 		self.klik()
-		
 
-		"""
-		gumb = tk.Button(okno, text="Nova igra", command=self.konec)		
-		gumb.pack()
-		gumb.place(x=65, y=310)
-
-		gumb1 = tk.Button(okno, text="Shrani", command=self.shrani)
-		gumb1.pack()
-		gumb1.place(x=135, y=310)
-
-		gumb2 = tk.Button(okno, text="Nadaljuj", command=self.nadaljuj)
-		gumb2.pack()
-		gumb2.place(x=185, y=310)"""
-
-		
 		menu = tk.Menu(okno)
 		filemenu = tk.Menu(menu)
 		okno.config(menu=menu)
@@ -48,16 +31,17 @@ class Gui:
 		filemenu.add_command(label="Nadaljuj", command=self.nadaljuj)
 
 
+
 	# Shrani trenutno stanje na igralni tablici
 	def shrani(self):
 		with open ("tri-v-vrsto.txt", "wb") as f:
 			pickle.dump(self.igra.tablica, f)
 
-	# Nadaljuj shranjeno igro
+	# Nadaljuje shranjeno igro
 	def nadaljuj(self):
 		with open("tri-v-vrsto.txt", "rb") as f:
 			sez = pickle.load(f)
-			print(sez)
+
 		self.igra.nova_igra()
 		self.osvezi_prikaz()
 
@@ -112,11 +96,19 @@ class Gui:
 	
 	
 	def konec(self):
-		izbira = tk.messagebox.askokcancel("Potrdi", "Konec igre?")
-		if izbira == True:
+		if self.igra.zmagovalne_kombinacije_racunalnik() or \
+		self.igra.zmagovalne_kombinacije_clovek() or \
+		self.igra.polna_tablica():
 			self.igra.nova_igra()
 			self.osvezi_prikaz()
 			self.klik()
+
+		else:
+			izbira = tk.messagebox.askokcancel("Potrdi", "Konec igre?")
+			if izbira == True:
+				self.igra.nova_igra()
+				self.osvezi_prikaz()
+				self.klik()
 
 
 	def kvadrat(self, event, n):
@@ -158,8 +150,6 @@ class Gui:
 				if self.igra.zmagovalne_kombinacije_racunalnik() == True:
 					tk.messagebox.showinfo(" ", "Izgubil si!")
 					self.odstrani_klik()
-				
-		print(self.igra)
 
 	def krog(self):
 		m = self.igra.racunalnik()
@@ -180,7 +170,6 @@ class Gui:
 	def osvezi_prikaz(self):
 		self.igralna_plosca.delete('all')
 
-	
 		# Tablica, prva vrsta
 		self.igralna_plosca.create_rectangle(
 			ODMIK,

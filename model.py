@@ -19,9 +19,9 @@ class Igra:
 			return False
 
 	def racunalnik(self):
-		if self.tablica[0] == PRAZNO:
-			self.tablica[0] = IGRALEC_RACUNALNIK
-			polje = 0
+		if self.tablica[4] == PRAZNO:
+			self.tablica[4] = IGRALEC_RACUNALNIK
+			polje = 4
 			return polje
 		elif self.tablica[0] == self.tablica[1] != PRAZNO and \
 		   self.tablica[2] == PRAZNO:

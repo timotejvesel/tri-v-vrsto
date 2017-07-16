@@ -44,9 +44,9 @@ class Igra:
 			polje = 5
 			return polje
 		elif self.tablica[4] == self.tablica[5] != PRAZNO and \
-		   self.tablica[6] == PRAZNO:
-			self.tablica[6] = IGRALEC_RACUNALNIK
-			polje = 6
+		   self.tablica[3] == PRAZNO:
+			self.tablica[3] = IGRALEC_RACUNALNIK
+			polje = 3
 			return polje
 		elif self.tablica[3] == self.tablica[5] != PRAZNO and \
 		   self.tablica[4] == PRAZNO:
@@ -208,6 +208,8 @@ class Igra:
 	def nova_igra(self):
 		for i in range(9):
 			self.tablica[i] = PRAZNO
+
+
 
 
 

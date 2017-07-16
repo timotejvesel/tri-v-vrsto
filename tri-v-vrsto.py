@@ -22,15 +22,16 @@ class Gui:
 		self.osvezi_prikaz()
 		self.klik()
 
+		# Meni z gumbi
 		menu = tk.Menu(okno)
 		filemenu = tk.Menu(menu)
 		okno.config(menu=menu)
 		menu.add_cascade(label="Možnosti", menu=filemenu)
 		filemenu.add_command(label="Nova igra", command=self.konec)
 		filemenu.add_command(label="Shrani", command=self.shrani)
-		filemenu.add_command(label="Nadaljuj", command=self.nadaljuj)
-
-
+		filemenu.add_command(label="Nadaljuj igro", command=self.nadaljuj)
+		filemenu.add_separator()
+		filemenu.add_command(label="Izhod", command=self.okno.destroy)
 
 	# Shrani trenutno stanje na igralni tablici
 	def shrani(self):
@@ -39,60 +40,66 @@ class Gui:
 
 	# Nadaljuje shranjeno igro
 	def nadaljuj(self):
-		with open("tri-v-vrsto.txt", "rb") as f:
-			sez = pickle.load(f)
+		try:
+			with open("tri-v-vrsto.txt", "rb") as f:
+				sez = pickle.load(f)
 
-		self.igra.nova_igra()
-		self.osvezi_prikaz()
+			self.igra.nova_igra()
+			self.osvezi_prikaz()
 
-		for i, j in enumerate(sez):
-			if j == "X":
-				x = i % 3
-				y = i // 3
+			for i, j in enumerate(sez):
+				if j == "X":
+					x = i % 3
+					y = i // 3
 
-				self.igralna_plosca.create_line(
-					2 * ODMIK + x * VELIKOST_TABLICE,
-					2 * ODMIK + y * VELIKOST_TABLICE,
-					(x + 1) * VELIKOST_TABLICE - ODMIK, 
-					(y + 1) * VELIKOST_TABLICE - ODMIK,
-					width=3
-				)
+					self.igralna_plosca.create_line(
+						2 * ODMIK + x * VELIKOST_TABLICE,
+						2 * ODMIK + y * VELIKOST_TABLICE,
+						(x + 1) * VELIKOST_TABLICE - ODMIK, 
+						(y + 1) * VELIKOST_TABLICE - ODMIK,
+						width=3
+					)
 
-				self.igralna_plosca.create_line(
-					2* ODMIK + x * VELIKOST_TABLICE,
-					(y + 1) * VELIKOST_TABLICE - ODMIK,
-					(x + 1) * VELIKOST_TABLICE - ODMIK,
-					2 * ODMIK + y * VELIKOST_TABLICE,
-					width=3
-				)
+					self.igralna_plosca.create_line(
+						2* ODMIK + x * VELIKOST_TABLICE,
+						(y + 1) * VELIKOST_TABLICE - ODMIK,
+						(x + 1) * VELIKOST_TABLICE - ODMIK,
+						2 * ODMIK + y * VELIKOST_TABLICE,
+						width=3
+					)
 
-				self.igra.clovek(i)
+					self.igra.clovek(i)
 
-			elif j == "O":
-				x = i % 3
-				y = i // 3
+				elif j == "O":
+					x = i % 3
+					y = i // 3
 
-				self.igralna_plosca.create_oval(
-					2 * ODMIK + x * VELIKOST_TABLICE,
-					2 * ODMIK + y * VELIKOST_TABLICE,
-					VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE, 
-					VELIKOST_TABLICE - ODMIK + y * VELIKOST_TABLICE,
-					width=3
-				)
+					self.igralna_plosca.create_oval(
+						2 * ODMIK + x * VELIKOST_TABLICE,
+						2 * ODMIK + y * VELIKOST_TABLICE,
+						VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE, 
+						VELIKOST_TABLICE - ODMIK + y * VELIKOST_TABLICE,
+						width=3
+					)
 
-				self.igra.tablica[i] = "O"
+					self.igra.tablica[i] = "O"
 
-		if self.igra.zmagovalne_kombinacije_clovek() == True:
-			tk.messagebox.showinfo(" ", "Zmagal si!")
-			self.odstrani_klik()
+			if self.igra.zmagovalne_kombinacije_clovek() == True:
+				tk.messagebox.showinfo(" ", "Zmagal si!")
+				self.odstrani_klik()
 
-		elif self.igra.polna_tablica() == True:
-			tk.messagebox.showinfo(" ", "Neodločeno!")
-			self.odstrani_klik()
-		
-		elif self.igra.zmagovalne_kombinacije_racunalnik() == True:
-			tk.messagebox.showinfo(" ", "Izgubil si!")
-			self.odstrani_klik()
+			elif self.igra.polna_tablica() == True:
+				tk.messagebox.showinfo(" ", "Neodločeno!")
+				self.odstrani_klik()
+			
+			elif self.igra.zmagovalne_kombinacije_racunalnik() == True:
+				tk.messagebox.showinfo(" ", "Izgubil si!")
+				self.odstrani_klik()
+
+		except IOError:
+			tk.messagebox.showinfo(" ", "Igra ni shranjena!")
+
+
 	
 	
 	def konec(self):

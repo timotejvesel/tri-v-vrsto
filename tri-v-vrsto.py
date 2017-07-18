@@ -3,6 +3,10 @@ import model
 import tkinter.messagebox
 import pickle
 
+PRAZNO = " "
+IGRALEC_CLOVEK = "X"
+IGRALEC_RACUNALNIK = "O"
+
 VELIKOST_TABLICE = 100
 ODMIK = 10
 
@@ -33,6 +37,42 @@ class Gui:
 		filemenu.add_separator()
 		filemenu.add_command(label="Izhod", command=self.okno.destroy)
 
+
+	def narisi_krizec(self, z):
+		# Matrične koordinate
+		x = z % 3
+		y = z // 3
+
+		self.igralna_plosca.create_line(
+				2 * ODMIK + x * VELIKOST_TABLICE,
+				2 * ODMIK + y * VELIKOST_TABLICE,
+				(x + 1) * VELIKOST_TABLICE - ODMIK, 
+				(y + 1) * VELIKOST_TABLICE - ODMIK,
+				width=3
+			)
+
+		self.igralna_plosca.create_line(
+			2* ODMIK + x * VELIKOST_TABLICE,
+			(y + 1) * VELIKOST_TABLICE - ODMIK,
+			(x + 1) * VELIKOST_TABLICE - ODMIK,
+			2 * ODMIK + y * VELIKOST_TABLICE,
+			width=3
+		)
+
+	def narisi_krozec(self, z):	
+		# Matrične koordinate
+		x = z % 3
+		y = z // 3
+
+		self.igralna_plosca.create_oval(
+			2 * ODMIK + x * VELIKOST_TABLICE,
+			2 * ODMIK + y * VELIKOST_TABLICE,
+			VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE, 
+			VELIKOST_TABLICE - ODMIK + y * VELIKOST_TABLICE,
+			width=3
+		)
+
+		
 	# Shrani trenutno stanje na igralni tablici
 	def shrani(self):
 		with open ("tri-v-vrsto.txt", "wb") as f:
@@ -48,51 +88,23 @@ class Gui:
 			self.osvezi_prikaz()
 
 			for i, j in enumerate(sez):
-				if j == "X":
-					x = i % 3
-					y = i // 3
+				if j == IGRALEC_CLOVEK:
+					self.narisi_krizec(i)
+					self.igra.tablica[i] = IGRALEC_CLOVEK
 
-					self.igralna_plosca.create_line(
-						2 * ODMIK + x * VELIKOST_TABLICE,
-						2 * ODMIK + y * VELIKOST_TABLICE,
-						(x + 1) * VELIKOST_TABLICE - ODMIK, 
-						(y + 1) * VELIKOST_TABLICE - ODMIK,
-						width=3
-					)
+				elif j == IGRALEC_RACUNALNIK:
+					self.narisi_krozec(i)
+					self.igra.tablica[i] = IGRALEC_RACUNALNIK
 
-					self.igralna_plosca.create_line(
-						2* ODMIK + x * VELIKOST_TABLICE,
-						(y + 1) * VELIKOST_TABLICE - ODMIK,
-						(x + 1) * VELIKOST_TABLICE - ODMIK,
-						2 * ODMIK + y * VELIKOST_TABLICE,
-						width=3
-					)
-
-					self.igra.clovek(i)
-
-				elif j == "O":
-					x = i % 3
-					y = i // 3
-
-					self.igralna_plosca.create_oval(
-						2 * ODMIK + x * VELIKOST_TABLICE,
-						2 * ODMIK + y * VELIKOST_TABLICE,
-						VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE, 
-						VELIKOST_TABLICE - ODMIK + y * VELIKOST_TABLICE,
-						width=3
-					)
-
-					self.igra.tablica[i] = "O"
-
-			if self.igra.zmagovalne_kombinacije_clovek() == True:
+			if self.igra.zmagovalne_kombinacije(IGRALEC_CLOVEK):
 				tk.messagebox.showinfo(" ", "Zmagal si!")
 				self.odstrani_klik()
 
-			elif self.igra.polna_tablica() == True:
+			elif self.igra.polna_tablica():
 				tk.messagebox.showinfo(" ", "Neodločeno!")
 				self.odstrani_klik()
 			
-			elif self.igra.zmagovalne_kombinacije_racunalnik() == True:
+			elif self.igra.zmagovalne_kombinacije(IGRALEC_RACUNALNIK):
 				tk.messagebox.showinfo(" ", "Izgubil si!")
 				self.odstrani_klik()
 
@@ -100,11 +112,9 @@ class Gui:
 			tk.messagebox.showinfo(" ", "Igra ni shranjena!")
 
 
-	
-	
 	def konec(self):
-		if self.igra.zmagovalne_kombinacije_racunalnik() or \
-		self.igra.zmagovalne_kombinacije_clovek() or \
+		if self.igra.zmagovalne_kombinacije(IGRALEC_RACUNALNIK) or \
+		self.igra.zmagovalne_kombinacije(IGRALEC_RACUNALNIK) or \
 		self.igra.polna_tablica():
 			self.igra.nova_igra()
 			self.osvezi_prikaz()
@@ -117,189 +127,74 @@ class Gui:
 				self.osvezi_prikaz()
 				self.klik()
 
-
 	def kvadrat(self, event, n):
-		# Matrične koordinate
-		x = n % 3
-		y = n // 3
-
 		if self.igra.clovek(n) == False:
 			tk.messagebox.showinfo(" ", "To polje je že zasedeno!")
 		else:
 			self.igra.clovek(n)
-
-			self.igralna_plosca.create_line(
-				2 * ODMIK + x * VELIKOST_TABLICE,
-				2 * ODMIK + y * VELIKOST_TABLICE,
-				(x + 1) * VELIKOST_TABLICE - ODMIK, 
-				(y + 1) * VELIKOST_TABLICE - ODMIK,
-				width=3
-			)
-
-			self.igralna_plosca.create_line(
-				2* ODMIK + x * VELIKOST_TABLICE,
-				(y + 1) * VELIKOST_TABLICE - ODMIK,
-				(x + 1) * VELIKOST_TABLICE - ODMIK,
-				2 * ODMIK + y * VELIKOST_TABLICE,
-				width=3
-			)
+			self.narisi_krizec(n)
 		
-
-			if self.igra.zmagovalne_kombinacije_clovek() == True:
+			if self.igra.zmagovalne_kombinacije(IGRALEC_CLOVEK):
 				tk.messagebox.showinfo(" ", "Zmagal si!")
 				self.odstrani_klik()
 
-			elif self.igra.polna_tablica() == True:
+			elif self.igra.polna_tablica():
 				tk.messagebox.showinfo(" ", "Neodločeno!")
 				self.odstrani_klik()
 			else:
 				self.krog()
-				if self.igra.zmagovalne_kombinacije_racunalnik() == True:
+				if self.igra.zmagovalne_kombinacije(IGRALEC_RACUNALNIK):
 					tk.messagebox.showinfo(" ", "Izgubil si!")
 					self.odstrani_klik()
 
 	def krog(self):
 		m = self.igra.racunalnik()
-
-		# Matrične koordinate
-		x = m % 3
-		y = m // 3
-
-		self.igralna_plosca.create_oval(
-			2 * ODMIK + x * VELIKOST_TABLICE,
-			2 * ODMIK + y * VELIKOST_TABLICE,
-			VELIKOST_TABLICE - ODMIK + x * VELIKOST_TABLICE, 
-			VELIKOST_TABLICE - ODMIK + y * VELIKOST_TABLICE,
-			width=3
-		)
+		self.narisi_krozec(m)
 
 		
 	def osvezi_prikaz(self):
 		self.igralna_plosca.delete('all')
 
-		# Tablica, prva vrsta
-		self.igralna_plosca.create_rectangle(
-			ODMIK,
-			ODMIK, 
-			VELIKOST_TABLICE,
-			VELIKOST_TABLICE, 
-			fill="FloralWhite", tags="kvadrat0_tag"
-		)
-		self.igralna_plosca.create_rectangle(
-			VELIKOST_TABLICE + ODMIK,
-			ODMIK, 
-			2 * VELIKOST_TABLICE,
-			VELIKOST_TABLICE,
-			fill="FloralWhite", tags="kvadrat1_tag"
-		)
-		self.igralna_plosca.create_rectangle(
-			2 * VELIKOST_TABLICE + ODMIK,
-			ODMIK,
-			3 * VELIKOST_TABLICE,
-			VELIKOST_TABLICE,
-		 	fill="FloralWhite", tags="kvadrat2_tag"
-		)
+		kvadratki = {
+			(0, 1, 0, 1, 1, 0, 1, 0, 0),
+		 	(1, 1, 0, 1, 2, 0, 1, 0, 1),
+		 	(2, 1, 0, 1, 3, 0, 1, 0, 2),
+		 	(0, 1, 2, 0, 1, 0, 1, 1, 3),
+		 	(1, 1, 2, 0, 2, 0, 1, 1, 4),
+		 	(2, 1, 2, 0, 3, 0, 1, 1, 5),
+		 	(0, 1, 3, 0, 1, 0, 2, 1, 6),
+		 	(1, 1, 3, 0, 2, 0, 2, 1, 7),
+		 	(2, 1, 3, 0, 3, 0, 2, 1, 8),
+		 }
 
-		# Tablica, druga vrsta
-		self.igralna_plosca.create_rectangle(
-			ODMIK,
-			2 * VELIKOST_TABLICE,
-			VELIKOST_TABLICE,
-			VELIKOST_TABLICE + ODMIK,
-		 	fill="FloralWhite", tags="kvadrat3_tag"
-		)
-		self.igralna_plosca.create_rectangle(
-			VELIKOST_TABLICE + ODMIK,
-			2 * VELIKOST_TABLICE,
-			2 * VELIKOST_TABLICE,
-			VELIKOST_TABLICE + ODMIK,
-			fill="FloralWhite", tags="kvadrat4_tag"
-		)
-		self.igralna_plosca.create_rectangle(
-			2 * VELIKOST_TABLICE + ODMIK,
-			2 * VELIKOST_TABLICE,
-			3* VELIKOST_TABLICE,
-			VELIKOST_TABLICE + ODMIK,
-			fill="FloralWhite", tags="kvadrat5_tag"
-		)
+		for x in kvadratki:
+			self.igralna_plosca.create_rectangle(
+				x[0] * VELIKOST_TABLICE + x[1] * ODMIK,
+		 		x[2] * VELIKOST_TABLICE + x[3] * ODMIK,
+		 		x[4] * VELIKOST_TABLICE + x[5] * ODMIK,
+		 		x[6] * VELIKOST_TABLICE + x[7] * ODMIK,
+		 		fill="FloralWhite", 
+		 		tags="kvadrat" + str(x[8]) + "_tag"
+		 	)
 
-		# Tablica, tretja vrsta
-		self.igralna_plosca.create_rectangle(
-			ODMIK,
-			3 * VELIKOST_TABLICE,
-			VELIKOST_TABLICE,
-			2 * VELIKOST_TABLICE + ODMIK,
-			fill="FloralWhite", tags="kvadrat6_tag"
-		)
-		self.igralna_plosca.create_rectangle(
-			VELIKOST_TABLICE + ODMIK,
-			3 * VELIKOST_TABLICE,
-			2 * VELIKOST_TABLICE,
-			2 * VELIKOST_TABLICE + ODMIK,
-			fill="FloralWhite", tags="kvadrat7_tag"
-		)
-		self.igralna_plosca.create_rectangle(
-			2 * VELIKOST_TABLICE + ODMIK,
-			3 * VELIKOST_TABLICE,
-			3 * VELIKOST_TABLICE,
-			2 * VELIKOST_TABLICE + ODMIK,
-			fill="FloralWhite", tags="kvadrat8_tag"
-		)
 
 	def klik(self):
-		self.igralna_plosca.tag_bind(
-			"kvadrat0_tag","<Button-1>",
-			 lambda event: self.kvadrat(event, 0)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat1_tag","<Button-1>", 
-			lambda event: self.kvadrat(event, 1)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat2_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 2)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat3_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 3)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat4_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 4)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat5_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 5)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat6_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 6)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat7_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 7)
-		)
-		self.igralna_plosca.tag_bind(
-			"kvadrat8_tag","<Button-1>",
-			lambda event: self.kvadrat(event, 8)
-		)
+		for t in range(9):
+			self.igralna_plosca.tag_bind(
+			"kvadrat" + str(t) + "_tag",
+			"<Button-1>",
+			 lambda event, t=t: self.kvadrat(event, t)
+			)
 
-
+		
 	def odstrani_klik(self):
-		self.igralna_plosca.tag_unbind("kvadrat0_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat1_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat2_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat3_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat4_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat5_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat6_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat7_tag",'<Button-1>')
-		self.igralna_plosca.tag_unbind("kvadrat8_tag",'<Button-1>')
+		for x in range(9):
+			self.igralna_plosca.tag_unbind(
+				"kvadrat" + str(x) + "_tag",
+				'<Button-1>'
+			)
 		
 		
-		
-
-
 okno = tk.Tk()
 okno.resizable(0,0)
 moj_program = Gui(okno)

@@ -19,130 +19,28 @@ class Igra:
 			return False
 
 	def racunalnik(self):
+		trojice = {
+			(0, 1, 2), (0, 2, 1), (1, 2, 0), (3, 4, 5),
+		 	(4, 5, 3), (3, 5, 4), (6, 7, 8), (7, 8, 6), 
+		 	(6, 8, 7), (0, 3, 6), (3, 6, 0), (0, 6, 3), 
+		 	(1, 4, 7), (4, 7, 1), (1, 7, 4), (2, 5, 8), 
+		 	(5, 8, 2), (2, 8, 5), (0, 4, 8), (4, 8, 0), 
+		 	(0, 8, 4), (2, 4, 6), (4, 6, 2), (2, 6, 4)
+		}
+
 		if self.tablica[4] == PRAZNO:
 			self.tablica[4] = IGRALEC_RACUNALNIK
 			polje = 4
 			return polje
-		elif self.tablica[0] == self.tablica[1] != PRAZNO and \
-		   self.tablica[2] == PRAZNO:
-			self.tablica[2] = IGRALEC_RACUNALNIK
-			polje = 2
-			return polje
-		elif self.tablica[0] == self.tablica[2] != PRAZNO and \
-		   self.tablica[1] == PRAZNO:
-			self.tablica[1] = IGRALEC_RACUNALNIK
-			polje = 1
-			return polje
-		elif self.tablica[1] == self.tablica[2] != PRAZNO and \
-		   self.tablica[0] == PRAZNO:
-			self.tablica[0] = IGRALEC_RACUNALNIK
-			polje = 0
-			return polje
-		elif self.tablica[3] == self.tablica[4] != PRAZNO and \
-		   self.tablica[5] == PRAZNO:
-			self.tablica[5] = IGRALEC_RACUNALNIK
-			polje = 5
-			return polje
-		elif self.tablica[4] == self.tablica[5] != PRAZNO and \
-		   self.tablica[3] == PRAZNO:
-			self.tablica[3] = IGRALEC_RACUNALNIK
-			polje = 3
-			return polje
-		elif self.tablica[3] == self.tablica[5] != PRAZNO and \
-		   self.tablica[4] == PRAZNO:
-			self.tablica[4] = IGRALEC_RACUNALNIK
-			polje = 4
-			return polje
-		elif self.tablica[6] == self.tablica[7] != PRAZNO and \
-		   self.tablica[8] == PRAZNO:
-			self.tablica[8] = IGRALEC_RACUNALNIK
-			polje = 8
-			return polje
-		elif self.tablica[7] == self.tablica[8] != PRAZNO and \
-		   self.tablica[6] == PRAZNO:
-			self.tablica[6] = IGRALEC_RACUNALNIK
-			polje = 6
-			return polje
-		elif self.tablica[6] == self.tablica[8] != PRAZNO and \
-		   self.tablica[7] == PRAZNO:
-			self.tablica[7] = IGRALEC_RACUNALNIK
-			polje = 7
-			return polje
-		elif self.tablica[0] == self.tablica[3] != PRAZNO and \
-		   self.tablica[6] == PRAZNO:
-			self.tablica[6] = IGRALEC_RACUNALNIK
-			polje = 6
-			return polje
-		elif self.tablica[3] == self.tablica[6] != PRAZNO and \
-		   self.tablica[0] == PRAZNO:
-			self.tablica[0] = IGRALEC_RACUNALNIK
-			polje = 0
-			return polje
-		elif self.tablica[0] == self.tablica[6] != PRAZNO and \
-		   self.tablica[3] == PRAZNO:
-			self.tablica[3] = IGRALEC_RACUNALNIK
-			polje = 3
-			return polje
-		elif self.tablica[1] == self.tablica[4] != PRAZNO and \
-		   self.tablica[7] == PRAZNO:
-			self.tablica[7] = IGRALEC_RACUNALNIK
-			polje = 7
-			return polje
-		elif self.tablica[4] == self.tablica[7] != PRAZNO and \
-		   self.tablica[1] == PRAZNO:
-			self.tablica[1] = IGRALEC_RACUNALNIK
-			polje = 1
-			return polje
-		elif self.tablica[1] == self.tablica[7] != PRAZNO and \
-		   self.tablica[4] == PRAZNO:
-			self.tablica[4] = IGRALEC_RACUNALNIK
-			polje = 4
-			return polje
-		elif self.tablica[2] == self.tablica[5] != PRAZNO and \
-		   self.tablica[8] == PRAZNO:
-			self.tablica[8] = IGRALEC_RACUNALNIK
-			polje = 8
-			return polje
-		elif self.tablica[5] == self.tablica[8] != PRAZNO and \
-		   self.tablica[2] == PRAZNO:
-			self.tablica[2] = IGRALEC_RACUNALNIK
-			polje = 2
-			return polje
-		elif self.tablica[2] == self.tablica[8] != PRAZNO and \
-		   self.tablica[5] == PRAZNO:
-			self.tablica[5] = IGRALEC_RACUNALNIK
-			polje = 5
-			return polje
-		elif self.tablica[0] == self.tablica[4] != PRAZNO and \
-		   self.tablica[8] == PRAZNO:
-			self.tablica[8] = IGRALEC_RACUNALNIK
-			polje = 8
-			return polje
-		elif self.tablica[4] == self.tablica[8] != PRAZNO and \
-		   self.tablica[0] == PRAZNO:
-			self.tablica[0] = IGRALEC_RACUNALNIK
-			polje = 0
-			return polje
-		elif self.tablica[0] == self.tablica[8] != PRAZNO and \
-		   self.tablica[4] == PRAZNO:
-			self.tablica[4] = IGRALEC_RACUNALNIK
-			polje = 4
-			return polje
-		elif self.tablica[2] == self.tablica[4] != PRAZNO and \
-		   self.tablica[6] == PRAZNO:
-			self.tablica[6] = IGRALEC_RACUNALNIK
-			polje = 6
-			return polje
-		elif self.tablica[4] == self.tablica[6] != PRAZNO and \
-		   self.tablica[2] == PRAZNO:
-			 self.tablica[2] = IGRALEC_RACUNALNIK
-			 polje = 2
-			 return polje
-		elif self.tablica[2] == self.tablica[6] != PRAZNO and \
-		   self.tablica[4] == PRAZNO:
-			self.tablica[4] = IGRALEC_RACUNALNIK
-			polje = 4
-			return polje
+
+		elif any(self.tablica[x[0]] == self.tablica[x[1]] != PRAZNO and \
+				self.tablica[x[2]] == PRAZNO for x in trojice):
+					a = next(x[2] for x in trojice if self.tablica[x[0]] == self.tablica[x[1]] != PRAZNO and \
+						self.tablica[x[2]] == PRAZNO)
+
+					self.tablica[a] = IGRALEC_RACUNALNIK
+					polje = a
+					return polje
 		else:
 			while True:
 				polje = random.randint(0, 8)
@@ -161,41 +59,16 @@ class Igra:
 			"----------" +"\n" +\
 			self.tablica[6] + " | " + self.tablica[7] +  " | "  + self.tablica[8] + "\n")
 
-	def zmagovalne_kombinacije_clovek(self):
-		# Preveri vrstice
-		if self.tablica[0] == self.tablica[1] == self.tablica[2] == IGRALEC_CLOVEK or \
-			self.tablica[3] == self.tablica[4] == self.tablica[5] == IGRALEC_CLOVEK or \
-			self.tablica[6] == self.tablica[7] == self.tablica[8] == IGRALEC_CLOVEK:
-				return True
+	def zmagovalne_kombinacije(self, igralec):
+		kombinacije = {
+			(0, 1, 2), (3, 4, 5), (6, 7, 8),
+			(0, 3, 6), (1, 4, 7), (2, 5, 8),
+			(0, 4, 8), (2, 4, 6),
+		}
 
-		# Preveri stolpce 
-		if self.tablica[0] == self.tablica[3] == self.tablica[6] == IGRALEC_CLOVEK or \
-			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_CLOVEK or \
-			self.tablica[2] == self.tablica[5] == self.tablica[8] == IGRALEC_CLOVEK:
-				return True
-	
-		# Preveri diagonale
-		if self.tablica[0] == self.tablica[4] == self.tablica[8] == IGRALEC_CLOVEK or \
-			self.tablica[2] == self.tablica[4] == self.tablica[6] == IGRALEC_CLOVEK:
-				return True
-
-	def zmagovalne_kombinacije_racunalnik(self):
-		# Preveri vrstice
-		if self.tablica[0] == self.tablica[1] == self.tablica[2] == IGRALEC_RACUNALNIK or \
-			self.tablica[3] == self.tablica[4] == self.tablica[5] == IGRALEC_RACUNALNIK or \
-			self.tablica[6] == self.tablica[7] == self.tablica[8] == IGRALEC_RACUNALNIK:
-				return True
-
-		# Preveri vrstice
-		if self.tablica[0] == self.tablica[3] == self.tablica[6] == IGRALEC_RACUNALNIK or \
-			self.tablica[1] == self.tablica[4] == self.tablica[7] == IGRALEC_RACUNALNIK or \
-			self.tablica[2] == self.tablica[5] == self.tablica[8] == IGRALEC_RACUNALNIK:
-				return True
-	
-		# Preveri diagonale
-		if self.tablica[0] == self.tablica[4] == self.tablica[8] == IGRALEC_RACUNALNIK or \
-			self.tablica[2] == self.tablica[4] == self.tablica[6] == IGRALEC_RACUNALNIK:
-				return True
+		return any(
+			self.tablica[x[0]] == self.tablica[x[1]] == self.tablica[x[2]] == igralec
+		 	for x in kombinacije)
 
 	def polna_tablica(self):
 		prazna_mesta = 0
@@ -208,8 +81,3 @@ class Igra:
 	def nova_igra(self):
 		for i in range(9):
 			self.tablica[i] = PRAZNO
-
-
-
-
-
